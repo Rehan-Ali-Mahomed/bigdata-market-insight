@@ -57,6 +57,21 @@ async function connect(config) {
   }
 }
 
+
+/* INSERT */
+
+async function insertMultiple(coll, data) {
+  try {
+    const collection = DB.collection(coll);
+
+    const result = await collection.insertMany(data);
+
+    return ({result:true, count:result.insertedCount, info:"Data inserted"});
+  } catch (e) {
+    return ({result:false, info:"Error pushing to db", error:e});
+  }
+}
+
 export default {
   
   db: DB,
@@ -66,6 +81,8 @@ export default {
     data: "data"
   },
   
-  start: start
+  start: start,
+  
+  insertMultiple: insertMultiple
   
 }

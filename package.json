@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/Rehan-Ali-Mahomed/bigdata-market-insight#readme",
   "dependencies": {
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "mongodb": "^6.3.0"
   },
-  "type":"module"
+  "type": "module"
 }

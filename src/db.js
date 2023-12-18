@@ -57,6 +57,17 @@ async function connect(config) {
   }
 }
 
+/* FIND */
+
+async function findAll(coll) {
+  try {
+    const collection = DB.collection(coll);
+    const data = await collection.find({}).toArray();
+    return ({result:true, data: data});
+  } catch (e) {
+  }
+}
+
 
 /* INSERT */
 
@@ -66,9 +77,9 @@ async function insertMultiple(coll, data) {
 
     const result = await collection.insertMany(data);
 
-    return ({result:true, count:result.insertedCount, info:"Data inserted"});
+    return ({result: true, count: result.insertedCount, info: "Data inserted"});
   } catch (e) {
-    return ({result:false, info:"Error pushing to db", error:e});
+    return ({result: false, info: "Error pushing to db", error: e});
   }
 }
 
@@ -83,6 +94,7 @@ export default {
   
   start: start,
   
+  findAll: findAll,
   insertMultiple: insertMultiple
   
 }

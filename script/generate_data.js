@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import db from '../src/db.js';
 
+const COUNT = 250000;
+
 const POSTES = [
   "Ingenieur PDT",
   "Ingenieur Reseau",
@@ -42,9 +44,9 @@ const TJM_MIN = 100;
 const TJM_MAX = 850;
 
 
-async function run() {
+async function run(count) {
   // generate data
-  let data = generateData(200);
+  let data = generateData(count);
   //console.log(data);
   // push it to db
   let push = await db.insertMultiple(db.coll.data, data);
@@ -56,6 +58,7 @@ async function run() {
 function generateData(count) {
   let data = [];
   for (let i = 0; i < count; i++) {
+    if (i % 10000 === 0) console.log(`${i}/${count} ...`);
     let actual = {
       poste: POSTES[getRandom(0, POSTES.length)],
       diplome: DIPLOMES[getRandom(0, DIPLOMES.length)],
@@ -82,4 +85,4 @@ function getRandom(min, max) {
 // init db
 await db.start();
 // run
-await run()
+await run(COUNT);

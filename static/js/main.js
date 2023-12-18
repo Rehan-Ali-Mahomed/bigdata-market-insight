@@ -33,7 +33,7 @@ function buildCharts(body) {
     },
     data: {
       labels: labels,
-      dataset: [{
+      datasets: [{
         label: "Offre par postes",
         data: data
       }]

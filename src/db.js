@@ -83,6 +83,18 @@ async function insertMultiple(coll, data) {
   }
 }
 
+async function drop(coll) {
+  try {
+    const collection = DB.collection(coll);
+
+    await collection.drop();
+
+    return ({result:true, info:"Collection drop, its empty now !"});
+  } catch (e) {
+    return ({result:false, info:"Error dropping collection", error:e});
+  }
+}
+
 export default {
   
   db: DB,
@@ -94,6 +106,7 @@ export default {
   
   start: start,
   
+  drop: drop,
   findAll: findAll,
   insertMultiple: insertMultiple
   

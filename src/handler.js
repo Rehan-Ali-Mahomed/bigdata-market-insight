@@ -28,6 +28,9 @@ function fromRequest(req, res) {
   console.log("query:", req.query);
   
   if (req.query.pathname === "/getStat") return stats.compile(req, res);
+
+  res.writeHead(302, {'Location': "/dashboard.html"});
+  res.end();
 }
 
 function parseBase(req) {

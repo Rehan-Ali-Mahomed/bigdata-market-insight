@@ -19,29 +19,49 @@ function indexFolder(prefix) {
 }
 
 function fromRequest(req, res) {
+  let body = "";
+
+  // wait end of request
+  req.on('data', (chunk) => {
+    // append chunk of data to body
+    body += chunk;
+  });
+
+  req.on('end', () => {
+    // process request
+    process(req, res, body);
+  });
+}
+
+function process(req, res, body) {
   // do basic parsing
-  parseBase(req);
+  parseBase(req, body);
   // check if asked ressource is static
   if (isPublic(req, res)) return;
-  
+
   // handle the request
   console.log("query:", req.query);
-  
+
   if (req.query.pathname === "/getStat") return stats.compile(req, res);
+  if (req.query.pathname === "/refreshData") return stats.refresh(req, res);
 
   res.writeHead(302, {'Location': "/dashboard.html"});
   res.end();
 }
 
-function parseBase(req) {
+function parseBase(req, body) {
   // parse query object
   req.query = url.parse(req.url, true);
   // returned object does not have a constructor
   req.query = JSON.parse(JSON.stringify(req.query));
   
   // parse body (if json)
-  // ...
   req.body = {}
+  if (req.headers.hasOwnProperty("content-type") && req.headers['content-type'] === "application/json") {
+    // parse json
+    req.body = JSON.parse(body);
+  }
+
 }
 
 function isPublic(req, res) {

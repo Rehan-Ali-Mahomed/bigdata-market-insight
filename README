@@ -2,3 +2,4 @@
 [x] Database connection (MongoDB ?)
 [x] Backend for data management
 [x] Frontend data visualization
+[ ] Docker

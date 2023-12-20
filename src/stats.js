@@ -1,6 +1,14 @@
 import db from "./db.js";
 
+let CACHE = null;
+
 async function compile(req, res) {
+  if (CACHE !== null) {
+    res.writeHead(200, {"Content-Type":"application/json"});
+    res.write(JSON.stringify(CACHE));
+    res.end();
+  }
+
   let find = await db.findAll(db.coll.data);
   if (!find.result) {
     res.writeHead(500, {"Content-Type":"application/json"});
@@ -16,30 +24,46 @@ async function compile(req, res) {
   let total_tjm = 0;
   for (let i = 0; i < find.data.length; i++) {
     let actual = find.data[i];
-    // compute post
-    stats.postes.hasOwnProperty(actual.poste) ? stats.postes[actual.poste]++ : stats.postes[actual.poste] = 1;
-    // compute displome
-    stats.diplomes.hasOwnProperty(actual.diplome) ? stats.diplomes[actual.diplome]++ : stats.diplomes[actual.diplome] = 1;
-    // compute city
-    stats.cities.hasOwnProperty(actual.city) ? stats.cities[actual.city]++ : stats.cities[actual.city] = 1;
-    
-    // compute tjm
-    if (stats.tjm.min > actual.tjm) stats.tjm.min = actual.tjm;
-    if (stats.tjm.max < actual.tjm) stats.tjm.max = actual.tjm;
+    compileItem(stats, actual);
     total_tjm += actual.tjm;
-    
-    // compute competences
-    for (let j = 0; j < actual.competences.length; j++) {
-      stats.competences.hasOwnProperty(actual.competences[j]) ? stats.competences[actual.competences[j]]++ : stats.competences[actual.competences[j]] = 1;
-    }
-    
   }
+  // compute average tjm by poste
+  for (let i = 0; i < Object.keys(stats.postes).length; i++) {
+    const key = Object.keys(stats.postes)[i];
+    stats.postes[key].average = stats.postes[key].tjm / stats.postes[key].count;
+  }
+
+  // compute average tjm
   stats.tjm.average = total_tjm / find.data.length;
-  
-  
+  CACHE = stats;
+
   res.writeHead(200, {"Content-Type":"application/json"});
   res.write(JSON.stringify(stats));
   res.end();
+}
+
+function compileItem(stats, item) {
+  // compute post
+  if (stats.postes.hasOwnProperty(item.poste)) {
+    stats.postes[item.poste].count++;
+    stats.postes[item.poste].tjm += item.tjm;
+  } else {
+    stats.postes[item.poste] = { count: 1, tjm: item.tjm }
+  }
+
+  // compute displome
+  stats.diplomes.hasOwnProperty(item.diplome) ? stats.diplomes[item.diplome]++ : stats.diplomes[item.diplome] = 1;
+  // compute city
+  stats.cities.hasOwnProperty(item.city) ? stats.cities[item.city]++ : stats.cities[item.city] = 1;
+
+  // compute tjm
+  if (stats.tjm.min > item.tjm) stats.tjm.min = item.tjm;
+  if (stats.tjm.max < item.tjm) stats.tjm.max = item.tjm;
+
+  // compute competences
+  for (let j = 0; j < item.competences.length; j++) {
+    stats.competences.hasOwnProperty(item.competences[j]) ? stats.competences[item.competences[j]]++ : stats.competences[item.competences[j]] = 1;
+  }
 }
 
 

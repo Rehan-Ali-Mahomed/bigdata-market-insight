@@ -2,3 +2,14 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 80px;
+  grid-auto-rows: auto;
+}
+
+.col {
+  grid-column: span 1;
+}

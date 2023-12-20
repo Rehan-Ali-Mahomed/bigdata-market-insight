@@ -1,4 +1,5 @@
 import db from "./db.js";
+import { spawn } from 'child_process';
 
 let CACHE = null;
 
@@ -66,7 +67,26 @@ function compileItem(stats, item) {
   }
 }
 
+function refresh(req, res) {
+  CACHE = null;
+
+  const process = spawn('node', ['script/generate_data.js', req.body.count]);
+  process.stdout.on('data', (data) => {
+    console.log(data.toString());
+  });
+  process.stderr.on('data', (data) => {
+    console.error(data.toString());
+  });
+  process.on('exit', (code) => {
+    console.log(code === 0 ? "Data Refreshed" : "Error refreshing data");
+    res.writeHead(200, {"Content-Type":"application/json"});
+    res.write(JSON.stringify({}));
+    res.end();
+  });
+}
+
 
 export default {
-  compile: compile
+  compile: compile,
+  refresh: refresh,
 }

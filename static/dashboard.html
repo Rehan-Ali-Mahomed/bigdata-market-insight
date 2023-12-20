@@ -3,24 +3,43 @@
 
   <head>
     <title>BigData by Rehan</title>
+    <meta charset="utf8">
     <link href="/css/master.css" rel="stylesheet">
   </head>
   
   <body>
+      <div class="row">
+        <div class="col">
+          <h1>Le rendu de <bold>Rehan Ali-Mahomed</bold></h1>
+          <h4>Mais clairement fait par <i>Louis Vaisset</i></h4>
+          <h4>Et visé et approuvé par <i>Institute Emmanuel & Richard Corporate and Associates Inc Worlwilde (CAC40)</i></h4>
+        </div>
+        <button class="ml-auto" id="refresh-btn">
+          <img src="/img/refresh.svg" alt="button">
+          Refresh Data
+        </button>
+      </div>
+
+
      <div class="grid">
-      <div class="col">
+      <div class="cube">
         <canvas id="chart-1" style="width: 370px; height: 350px;"></canvas>
       </div>
-      <div class="col">
+      <div class="cube">
         <canvas id="chart-2" style="width: 370px; height: 350px;"></canvas>
       </div>
-      <div class="col">
+      <div class="cube">
         <canvas id="chart-3" style="width: 370px; height: 350px;"></canvas>
       </div>
-      <div class="col">
+      <div class="cube">
         <canvas id="chart-4" style="width: 370px; height: 350px;"></canvas>
       </div>
      </div>
+
+     <footer>
+       <p class="ml-auto">Bisous</p>
+       <p class="mr-auto heart">❤️</p>
+     </footer>
 
     <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="/js/main.js"></script>

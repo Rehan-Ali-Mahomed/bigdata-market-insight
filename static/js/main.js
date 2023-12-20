@@ -1,5 +1,14 @@
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("Page chargé !");
+  document.querySelector("#refresh-btn").addEventListener("click", (e) => {
+    refreshData();
+  });
+
+  Chart.defaults.backgroundColor = "#000000";
+  Chart.defaults.borderColor = "#757575";
+  Chart.defaults.color = "#FFFFFF";
+  Chart.defaults.font.family = "Hack"
+
   await getStats();
 });
 
@@ -8,7 +17,36 @@ let CHART2 = null;
 let CHART3 = null;
 let CHART4 = null;
 
+function setLoading(show) {
+  if (show) {
+    document.querySelector("#refresh-btn img").classList.add("rotate");
+  } else {
+    document.querySelector("#refresh-btn img").classList.remove("rotate");
+  }
+}
+
+function refreshData() {
+  let input = prompt("Number of data to generate (ex: 10500)");
+  let nb = parseInt(input);
+  if (isNaN(nb)) {
+    alert("Input not a number");
+    return;
+  }
+
+  setLoading(true);
+  let xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      getStats();
+    }
+  };
+  xmlhttp.open("POST", "/refreshData", true);
+  xmlhttp.setRequestHeader("Content-Type", "application/json");
+  xmlhttp.send(JSON.stringify({count: nb}));
+}
+
 function getStats() {
+  setLoading(true)
   let xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200) {
@@ -27,6 +65,7 @@ function buildCharts(body) {
   buildChartCities(body.cities);
   buildChartDiplomes(body.diplomes);
   buildChartCompetences(body.competences);
+  setLoading(false);
 }
 
 function buildChartPostes(postes) {
@@ -38,6 +77,7 @@ function buildChartPostes(postes) {
   });
 
   console.log("max", min, max);
+  if (CHART1 !== null) CHART1.destroy();
   CHART1 = new Chart(document.getElementById("chart-1").getContext("2d"), {
     data: {
       labels: labels,
@@ -83,6 +123,7 @@ function buildChartPostes(postes) {
 function buildChartCities(cities) {
   let labels = Object.keys(cities);
 
+  if (CHART2 !== null) CHART2.destroy();
   CHART2 = new Chart(document.getElementById("chart-2").getContext("2d"), {
     type: "radar",
     data: {
@@ -104,6 +145,7 @@ function buildChartDiplomes(diplomes) {
     if (diplomes[key] < min) min = diplomes[key];
   });
 
+  if (CHART3 !== null) CHART3.destroy();
   CHART3 = new Chart(document.getElementById("chart-3").getContext("2d"), {
     type: 'polarArea',
     data: {
@@ -129,6 +171,7 @@ function buildChartCompetences(competences) {
     return ({x: i, y: competences[labels[i]]});
   });
 
+  if (CHART4 !== null) CHART4.destroy();
   CHART4 = new Chart(document.getElementById("chart-4").getContext("2d"), {
     type: "scatter",
     data: {

@@ -1,4 +1,4 @@
-[ ] Data generation script
-[ ] Database connection (MongoDB ?)
-[ ] Backend for data management
-[ ] Frontend data visualization
+[x] Data generation script
+[x] Database connection (MongoDB ?)
+[x] Backend for data management
+[x] Frontend data visualization

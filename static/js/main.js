@@ -31,8 +31,13 @@ function buildCharts(body) {
 
 function buildChartPostes(postes) {
   let labels = Object.keys(postes);
-  //let data = labels.map(key => postes[key]);
+  let min = postes[labels[0]].count, max = 0;
+  labels.map(key => {
+    if (postes[key].count > max) max = postes[key].count;
+    if (postes[key].count < min) min = postes[key].count;
+  });
 
+  console.log("max", min, max);
   CHART1 = new Chart(document.getElementById("chart-1").getContext("2d"), {
     data: {
       labels: labels,
@@ -61,6 +66,8 @@ function buildChartPostes(postes) {
           type: "linear",
           display: true,
           position: "left",
+          min: min - (min / 10),
+          max: max + (max / 20)
         },
         "axis-tjm": {
           type: "linear",
@@ -81,6 +88,7 @@ function buildChartCities(cities) {
     data: {
       labels: labels,
       datasets: [{
+        label: "Postes par ville",
         data: labels.map(key => cities[key])
       }]
     }
@@ -117,15 +125,33 @@ function buildChartDiplomes(diplomes) {
 
 function buildChartCompetences(competences) {
   let labels = Object.keys(competences);
+  let data = labels.map((key, i) => {
+    return ({x: i, y: competences[labels[i]]});
+  });
 
   CHART4 = new Chart(document.getElementById("chart-4").getContext("2d"), {
-    type: "doughnut",
+    type: "scatter",
     data: {
       labels: labels,
       datasets: [{
         label: "Postes par competences",
-        data: labels.map(key => competences[key])
+        data: data
       }]
+    },
+    options: {
+      scales: {
+        x: { display: false }
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              //console.log(context);
+              return `${context.raw.y} Postes`;
+            }
+          }
+        }
+      }
     }
-  })
+  });
 }

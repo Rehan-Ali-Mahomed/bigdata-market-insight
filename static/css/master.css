@@ -1,15 +1,92 @@
+:root {
+  --white: #FFFFFF;
+  --black: #000000;
+  --grey: #757575;
+  --space: 80px;
+}
+
 body {
   margin: 0;
-  padding: 0;
+  padding: var(--space);
+  font-family: "Hack";
+  color: var(--white);
+  background: var(--black);
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 80px;
+  grid-gap: var(--space);
   grid-auto-rows: auto;
 }
 
-.col {
+.grid .cube {
   grid-column: span 1;
+  border: 1px solid var(--grey);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.row {
+  display: flex;
+}
+
+.row .col {
+  width: fit-content;
+}
+
+button {
+  color: var(--white);
+  display: flex;
+  height: fit-content;
+  background-color: var(--black);
+  border: 2px solid var(--grey);
+  border-radius: 9px;
+  padding: 8px;
+  cursor: pointer;
+  animation: all ease-in-out 600ms;
+  vertical-align: center;
+}
+button:hover {
+  transform: scale(105%);
+}
+
+button img {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
+
+footer {
+  display: flex;
+  text-align: center;
+  margin: 100px 20px;
+}
+
+.rotate {
+  animation: spin 2s linear infinite;
+}
+
+.ml-auto { margin-left: auto; }
+.mr-auto { margin-right: auto; }
+
+.heart {
+  margin-left: 10px;
+  animation: beat .25s infinite alternate;
+  transform-origin: center;
+}
+
+@font-face {
+  font-family: "Hack";
+  src: url("/fonts/Hack-Regular.ttf") format("truetype");
+}
+
+/* Animation */
+
+@keyframes beat {
+  to { transform: scale(1.4); }
+}
+
+@keyframes spin {
+  100% { transform:rotate(360deg); }
 }

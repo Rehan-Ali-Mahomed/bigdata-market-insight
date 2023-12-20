@@ -1,8 +1,6 @@
 import 'dotenv/config';
 import db from '../src/db.js';
 
-const COUNT = 250000;
-
 const POSTES = [
   "Ingenieur PDT",
   "Ingenieur Reseau",
@@ -82,7 +80,23 @@ function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+
+// check argument
+if (process.argv.length < 3) {
+  console.error("Please provide a number of data to generate");
+  process.exit(1);
+}
+
+// parse argument
+let nb = parseInt(process.argv[2]);
+if (isNaN(nb)) {
+  console.error("Argument is not a number");
+  process.exit(2);
+}
+
 // init db
 await db.start();
+// drop collection
+await db.drop(db.coll.data);
 // run
-await run(COUNT);
+await run(nb);

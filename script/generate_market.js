@@ -78,7 +78,7 @@ async function run(count) {
 function generateData(count) {
   let data = [];
   for (let i = 0; i < count; i++) {
-    if (i % 10000 === 0) console.log(`${i}/${count} ...`);
+    if (i % (count * 0.2) === 0) console.log(`${i}/${count} ...`);
     let randomEntreprise = getRandomEntreprise();
     let actual = {
       entreprise: randomEntreprise.entreprise,
@@ -87,7 +87,7 @@ function generateData(count) {
       projet_besoin: PROJET_BESOIN[getRandom(0, PROJET_BESOIN.length)],
       prerequis: generatePrerequis(),
       city: CITY[getRandom(0, CITY.length)],
-      tjmMax: getRandom(TJM_MIN, TJM_MAX),
+      tjm: getRandom(TJM_MIN, TJM_MAX),
     }
     data.push(actual);
   }
@@ -139,6 +139,6 @@ if (isNaN(nb)) {
 // init db
 await db.start();
 // drop collection
-await db.drop(db.coll.data);
+await db.drop(db.coll.market);
 // run
 await run(nb);

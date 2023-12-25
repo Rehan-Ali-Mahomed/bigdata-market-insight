@@ -1,6 +1,7 @@
 import url from "url";
 import fs from "fs";
 import stats from "./stats.js";
+import market_stats from "./market_stats.js";
 
 const INDEXES = [];
 
@@ -43,6 +44,7 @@ function process(req, res, body) {
   console.log("query:", req.query);
 
   if (req.query.pathname === "/getStat") return stats.compile(req, res);
+  if (req.query.pathname === "/getMarketStat") return market_stats.compile(req, res);
   if (req.query.pathname === "/refreshData") return stats.refresh(req, res);
 
   res.writeHead(302, {'Location': "/dashboard.html"});

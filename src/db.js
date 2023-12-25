@@ -101,7 +101,8 @@ export default {
   client: CLIENT,
   
   coll: {
-    data: "data"
+    data: "data",
+    market: "market"
   },
   
   start: start,

@@ -2,7 +2,7 @@
   --white: #FFFFFF;
   --black: #000000;
   --grey: #757575;
-  --space: 80px;
+  --space: 50px;
 }
 
 body {
@@ -24,7 +24,7 @@ body {
   grid-column: span 1;
   border: 1px solid var(--grey);
   border-radius: 20px;
-  padding: 20px;
+  padding: 5px;
 }
 
 .row {
@@ -33,6 +33,28 @@ body {
 
 .row .col {
   width: fit-content;
+}
+
+.hide {
+  display: none;
+}
+
+.center {
+  text-align: center;
+}
+
+.container {
+  padding: 2em;
+  position: relative;
+}
+
+.center-button {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 button {

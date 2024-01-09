@@ -46,6 +46,7 @@ function process(req, res, body) {
   if (req.query.pathname === "/getStat") return stats.compile(req, res);
   if (req.query.pathname === "/getMarketStat") return market_stats.compile(req, res);
   if (req.query.pathname === "/refreshData") return stats.refresh(req, res);
+  if (req.query.pathname === "/refreshMarketData") return market_stats.refresh(req, res);
 
   res.writeHead(302, {'Location': "/dashboard.html"});
   res.end();

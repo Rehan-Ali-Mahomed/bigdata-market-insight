@@ -2,6 +2,7 @@ import db from "./db.js";
 import { spawn } from 'child_process';
 
 let CACHE = null;
+let NOMBRETOPCOMPETENCES = 15;
 
 async function compile(req, res) {
   if (CACHE !== null) {
@@ -19,8 +20,8 @@ async function compile(req, res) {
   }
   
   let marketStats = {
-    entreprises: {}, secteurs: {}, prioritaires: {}, projet_besoins: {}, cities: {}, competences: {},
-    tjm: { min: find.data[0].tjm, max: 0, average: 0 }, total : {}
+    entreprises: {}, secteurs: {}, projet_besoins: {}, cities: {}, competences: {},
+    tjm: { min: find.data[0].tjm, max: 0, average: 0 }, total : {}, prioritaires: 0, topcompetences: {}
   };
   
   let total_tjm = 0;
@@ -66,7 +67,7 @@ function compileItem(marketStats, item) {
   marketStats.secteurs.hasOwnProperty(item.secteur) ? marketStats.secteurs[item.secteur]++ : marketStats.secteurs[item.secteur] = 1;
  
   // compute prioritaires
-  marketStats.prioritaires.hasOwnProperty(item.prioritaire) ? marketStats.prioritaires[item.prioritaire]++ : marketStats.prioritaires[item.prioritaire] = 1;
+  if(item.prioritaire) marketStats.prioritaires = marketStats.prioritaires + 1
 
   // compute tjm
   if (marketStats.tjm.min > item.tjm) marketStats.tjm.min = item.tjm;
@@ -76,9 +77,21 @@ function compileItem(marketStats, item) {
   for (let j = 0; j < item.prerequis.competences.length; j++) {
     marketStats.competences.hasOwnProperty(item.prerequis.competences[j]) ? marketStats.competences[item.prerequis.competences[j]]++ : marketStats.competences[item.prerequis.competences[j]] = 1;
   }
+
+  marketStats.topcompetences = Object.entries(marketStats.competences).sort((a, b) => b[1] - a[1]).slice(0, NOMBRETOPCOMPETENCES);
+  
+  let formatedtmp = {};
+  let tmp = marketStats.topcompetences;
+
+  for (let j = 0; j < tmp.length; j++) {
+    formatedtmp[tmp[j][0]] = tmp[j][1];
+  }
+
+  marketStats.topcompetences = formatedtmp;
+  
 }
 
-function refreshMarket(req, res) {
+function refresh(req, res) {
   CACHE = null;
 
   const process = spawn('node', ['script/generate_market.js', req.body.count]);
@@ -99,5 +112,5 @@ function refreshMarket(req, res) {
 
 export default {
   compile: compile,
-  refreshMarket: refreshMarket,
+  refresh: refresh,
 }

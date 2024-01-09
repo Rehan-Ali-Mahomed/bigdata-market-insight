@@ -5,13 +5,14 @@ const POSTES = [
   "Ingenieur PDT",
   "Ingenieur Reseau",
   "Ingenieur Infrastructure",
-  "Chef de projet (lol)",
+  "Chef de projet",
   "Developpeur backend",
   "Developpeur frontend",
-  "Developpeur full stack",
-  "DevOps",
+  "Developpeur full-stack",
+  "Ingénieur DevOps",
   "Pentesteur",
-  "Habibi"
+  "Administrateur BDD",
+  "Architecte Cloud"
 ];
 
 const DIPLOMES = [

@@ -19,13 +19,13 @@ const PROJET_BESOIN = [
   "Ingenieur PDT",
   "Ingenieur Reseau",
   "Ingenieur Infrastructure",
-  "Chef de projet Informatique",
+  "Chef de projet",
   "Developpeur backend",
   "Developpeur frontend",
-  "Developpeur full stack",
+  "Developpeur full-stack",
   "Ingénieur DevOps",
   "Pentesteur",
-  "Administrateur de Base de Données",
+  "Administrateur BDD",
   "Architecte Cloud"
 ];
 

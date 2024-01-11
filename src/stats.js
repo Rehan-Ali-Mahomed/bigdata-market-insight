@@ -19,7 +19,7 @@ async function compile(req, res) {
   
   let stats = {
     postes: {}, diplomes: {}, competences: {}, cities: {},
-    tjm: { min: find.data[0].tjm, max: 0, average: 0 } 
+    tjm: { min: find.data[0].tjm, max: 0, average: 0 }, total: {}
   };
   
   let total_tjm = 0;
@@ -36,6 +36,8 @@ async function compile(req, res) {
 
   // compute average tjm
   stats.tjm.average = total_tjm / find.data.length;
+  stats.total = find.data.length;
+
   CACHE = stats;
 
   res.writeHead(200, {"Content-Type":"application/json"});

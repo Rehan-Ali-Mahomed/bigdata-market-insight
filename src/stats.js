@@ -19,7 +19,7 @@ async function compile(req, res) {
   
   let stats = {
     postes: {}, diplomes: {}, competences: {}, cities: {},
-    tjm: { min: find.data[0].tjm, max: 0, average: 0 }, total: {}
+    tjm: { min: find.data[0].tjm, max: 0, average: 0 }, total: {}, availables: 0
   };
   
   let total_tjm = 0;
@@ -54,11 +54,14 @@ function compileItem(stats, item) {
     stats.postes[item.poste] = { count: 1, tjm: item.tjm }
   }
 
-  // compute displome
+  // compute diplome
   stats.diplomes.hasOwnProperty(item.diplome) ? stats.diplomes[item.diplome]++ : stats.diplomes[item.diplome] = 1;
   // compute city
   stats.cities.hasOwnProperty(item.city) ? stats.cities[item.city]++ : stats.cities[item.city] = 1;
 
+  // compute available
+  if(item.available) stats.availables = stats.availables + 1
+  
   // compute tjm
   if (stats.tjm.min > item.tjm) stats.tjm.min = item.tjm;
   if (stats.tjm.max < item.tjm) stats.tjm.max = item.tjm;

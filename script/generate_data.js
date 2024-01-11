@@ -63,7 +63,8 @@ function generateData(count) {
       diplome: DIPLOMES[getRandom(0, DIPLOMES.length)],
       city: CITY[getRandom(0, CITY.length)],
       tjm: getRandom(TJM_MIN, TJM_MAX),
-      competences: generateCompetences(getRandom(2, 10))
+      competences: generateCompetences(getRandom(2, 10)),
+      available: Math.random() > 0.87,
     }
     data.push(actual);
   }

@@ -21,7 +21,7 @@ async function compile(req, res) {
   
   let marketStats = {
     entreprises: {}, secteurs: {}, projet_besoins: {}, cities: {}, competences: {},
-    tjm: { min: find.data[0].tjm, max: 0, average: 0 }, total : {}, prioritaires: 0, topcompetences: {}
+    tjm: { min: 850, max: 0, average: 0 }, total : {}, prioritaires: 0, topcompetences: {}
   };
   
   let total_tjm = 0;

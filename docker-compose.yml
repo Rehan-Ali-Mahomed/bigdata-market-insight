@@ -2,6 +2,7 @@ version: '3'
 services:
   bigdata-app:
     image: rehanalimahomed/bigdata-market-insight:latest
+    restart: always
     ports:
       - "8080:8080" # Port de l'hôte:Port du conteneur
     environment:
@@ -13,6 +14,7 @@ services:
       - mongodb
   mongodb:
     image: mongo
+    restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=
       - MONGO_INITDB_ROOT_PASSWORD=

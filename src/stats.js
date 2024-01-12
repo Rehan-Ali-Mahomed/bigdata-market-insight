@@ -19,7 +19,8 @@ async function compile(req, res) {
   
   let stats = {
     postes: {}, diplomes: {}, competences: {}, cities: {},
-    tjm: { min: find.data[0].tjm, max: 0, average: 0 }, total: {}, availables: 0
+    tjm: { min: find.data[0].tjm, max: 0, average: 0 }, total: {},
+    availableMarkets: { count: 0 }, unavailableMarkets: { count: 0 }
   };
   
   let total_tjm = 0;
@@ -59,9 +60,15 @@ function compileItem(stats, item) {
   // compute city
   stats.cities.hasOwnProperty(item.city) ? stats.cities[item.city]++ : stats.cities[item.city] = 1;
 
-  // compute available
-  if(item.available) stats.availables = stats.availables + 1
-  
+  // compute availables and available per Market
+  if (item.available){
+    stats.availableMarkets.hasOwnProperty(item.poste) ? stats.availableMarkets[item.poste]++ : stats.availableMarkets[item.poste] = 1;
+    stats.availableMarkets.count = stats.availableMarkets.count + 1;
+  } else {
+    stats.unavailableMarkets.hasOwnProperty(item.poste) ? stats.unavailableMarkets[item.poste]++ : stats.unavailableMarkets[item.poste] = 1;
+    stats.unavailableMarkets.count = stats.unavailableMarkets.count + 1;
+  }
+
   // compute tjm
   if (stats.tjm.min > item.tjm) stats.tjm.min = item.tjm;
   if (stats.tjm.max < item.tjm) stats.tjm.max = item.tjm;

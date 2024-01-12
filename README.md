@@ -87,7 +87,7 @@ Accédez à l'application via un navigateur web à l'adresse : http://localhost:
 #### Démarrage du container MongoDB
 
 ```bash
-docker run -d --name bigdata-mongodb -p 27017:27017 -e MONGO_INITDB_DATABASE=BigData
+docker run -d --name mongodb -p 27017:27017 -e MONGO_INITDB_DATABASE=BigData
 ```
 
 #### Démarrage du container de l'application

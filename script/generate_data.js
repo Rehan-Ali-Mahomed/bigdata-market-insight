@@ -56,6 +56,8 @@ async function run(count) {
 
 function generateData(count) {
   let data = [];
+  let randomAvailableRatio = getRandom(60, 80) / 100;
+
   for (let i = 0; i < count; i++) {
     if (i % 10000 === 0) console.log(`${i}/${count} ...`);
     let actual = {
@@ -64,7 +66,7 @@ function generateData(count) {
       city: CITY[getRandom(0, CITY.length)],
       tjm: getRandom(TJM_MIN, TJM_MAX),
       competences: generateCompetences(getRandom(2, 10)),
-      available: Math.random() > 0.87,
+      available: Math.random() > randomAvailableRatio,
     }
     data.push(actual);
   }

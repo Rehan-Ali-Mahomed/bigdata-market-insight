@@ -19,7 +19,7 @@ async function compile(req, res) {
   
   let stats = {
     postes: {}, diplomes: {}, competences: {}, cities: {},
-    tjm: { min: find.data[0].tjm, max: 0, average: 0 }, total: {},
+    tjm: { min: 850, max: 0, average: 0 }, total: {},
     availableMarkets: { count: 0 }, unavailableMarkets: { count: 0 }
   };
   

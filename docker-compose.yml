@@ -1,0 +1,24 @@
+version: '3'
+services:
+  webapp:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=mongodb
+      - DB_NAME=BigData
+      - DB_USERNAME=
+      - DB_PASSWORD=
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=
+      - MONGO_INITDB_ROOT_PASSWORD=
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+volumes:
+  mongodb_data:

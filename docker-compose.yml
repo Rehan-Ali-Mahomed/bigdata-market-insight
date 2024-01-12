@@ -1,9 +1,9 @@
 version: '3'
 services:
-  webapp:
-    build: .
+  bigdata-app:
+    image: rehanalimahomed/bigdata-market-insight:latest
     ports:
-      - "8080:8080"
+      - "8080:8080" # Port de l'hôte:Port du conteneur
     environment:
       - DB_HOST=mongodb
       - DB_NAME=BigData
@@ -16,9 +16,5 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=
       - MONGO_INITDB_ROOT_PASSWORD=
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
-volumes:
-  mongodb_data:
+      - MONGO_INITDB_DATABASE=BigData
+

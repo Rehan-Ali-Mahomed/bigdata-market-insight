@@ -35,8 +35,15 @@ function setLoading(show) {
 }
 
 function refreshData() {
-  let input = prompt("Number of data to generate (ex: 10500)");
+  let input = prompt("DONNEES CONSULTANTS. \nEntrer un nombre (ex: 350) pour générer les données de consultants. Note : Plus le nombre est élevée, plus le temps de traitement le sera ainsi que l'homogéinisation des données aléatoires.");
   let nb = parseInt(input);
+  if (isNaN(nb)) {
+    alert("Input not a number");
+    return;
+  }
+
+  let input2 = prompt("DONNEES MARCHE. \nEntrer un nombre (ex: 550) pour générer les données de marché. Note : Plus le nombre est élevée, plus le temps de traitement le sera ainsi que l'homogéinisation des données aléatoires.");
+  let nb2 = parseInt(input2);
   if (isNaN(nb)) {
     alert("Input not a number");
     return;
@@ -46,7 +53,6 @@ function refreshData() {
   let xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
-      getStats();
       getMarketStats();
     }
   };
@@ -57,13 +63,12 @@ function refreshData() {
   let xmlhttp2 = new XMLHttpRequest();
   xmlhttp2.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
-      getStats();
       getMarketStats();
     }
   };
   xmlhttp2.open("POST", "/api/refreshMarketData", true);
   xmlhttp2.setRequestHeader("Content-Type", "application/json");
-  xmlhttp2.send(JSON.stringify({ count: nb }));
+  xmlhttp2.send(JSON.stringify({ count: nb2 }));
 }
 
 /* ------- Data Charts ------- */

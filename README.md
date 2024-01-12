@@ -107,6 +107,8 @@ docker-compose up -d
 
 ## 👤 Rehan Ali-Mahomed
 
+- Contributor : Special thanks to Louis V.
+
 - Github: [@Rehan-Ali-Mahomed](https://github.com/Rehan-Ali-Mahomed)
 
 - DockerHub: [@rehanalimahomed](https://hub.docker.com/repository/docker/rehanalimahomed/bigdata-market-insight/general)

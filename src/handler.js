@@ -41,12 +41,12 @@ function process(req, res, body) {
   if (isPublic(req, res)) return;
 
   // handle the request
-  console.log("query:", req.query);
+  console.log("Request received for :", req.query.pathname);
 
-  if (req.query.pathname === "/getStat") return stats.compile(req, res);
-  if (req.query.pathname === "/getMarketStat") return market_stats.compile(req, res);
-  if (req.query.pathname === "/refreshData") return stats.refresh(req, res);
-  if (req.query.pathname === "/refreshMarketData") return market_stats.refresh(req, res);
+  if (req.query.pathname === "/api/getStat") return stats.compile(req, res);
+  if (req.query.pathname === "/api/getMarketStat") return market_stats.compile(req, res);
+  if (req.query.pathname === "/api/refreshData") return stats.refresh(req, res);
+  if (req.query.pathname === "/api/refreshMarketData") return market_stats.refresh(req, res);
 
   res.writeHead(302, {'Location': "/dashboard.html"});
   res.end();

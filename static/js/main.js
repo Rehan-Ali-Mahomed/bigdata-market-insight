@@ -50,7 +50,7 @@ function refreshData() {
       getMarketStats();
     }
   };
-  xmlhttp.open("POST", "/refreshData", true);
+  xmlhttp.open("POST", "/api/refreshData", true);
   xmlhttp.setRequestHeader("Content-Type", "application/json");
   xmlhttp.send(JSON.stringify({ count: nb }));
 
@@ -61,7 +61,7 @@ function refreshData() {
       getMarketStats();
     }
   };
-  xmlhttp2.open("POST", "/refreshMarketData", true);
+  xmlhttp2.open("POST", "/api/refreshMarketData", true);
   xmlhttp2.setRequestHeader("Content-Type", "application/json");
   xmlhttp2.send(JSON.stringify({ count: nb }));
 }
@@ -78,7 +78,7 @@ function getStats() {
       buildCharts(body);
     }
   };
-  xmlhttp.open("GET", "/getStat", true);
+  xmlhttp.open("GET", "/api/getStat", true);
   xmlhttp.send();
 }
 
@@ -141,7 +141,7 @@ function getMarketStats() {
       buildMarketCharts(body);
     }
   };
-  xmlhttp.open("GET", "/getMarketStat", true);
+  xmlhttp.open("GET", "/api/getMarketStat", true);
   xmlhttp.send();
 }
 

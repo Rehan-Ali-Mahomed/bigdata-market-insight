@@ -3,6 +3,7 @@
   --black: #000000;
   --grey: #757575;
   --space: 50px;
+  --short-space: 25px;
 }
 
 body {
@@ -18,6 +19,28 @@ body {
   grid-template-columns: repeat(3, 1fr);
   grid-gap: var(--space);
   grid-auto-rows: auto;
+}
+
+.center-grid  {
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-text {
+  padding-top: 15px;
+  padding-bottom: 15px ;
+  display: grid;
+  grid-template-columns: repeat(3, 0.15fr);
+  grid-gap: var(--short-space);
+  grid-auto-rows: auto;
+}
+
+.grid-text .cube {
+  grid-column: span 1;
+  border: 1px solid var(--grey);
+  border-radius: 20px;
+  padding: 5px;
+  text-align: center;
 }
 
 .grid .cube {
